@@ -6,4 +6,4 @@ dataset_casos - Dataset com dados a serem diagnosticados
 
 dataset_doencas - Dataset com dados já diagnosticados que servirá para a recuperação e análise de similaridade dos casos
 
-Inspirado em: https://github.com/yammadev/cbrs?tab=readme-ov-file#231---2020-04-08
+Inspirado em: https://github.com/yammadev/cbrs
