@@ -1,0 +1,386 @@
+// ~->[DNET-1]->~
+
+// File created by an unlicensed user using Netica 7.01 on Oct 23, 2024 at 03:55:23 UTC.
+
+bnet ChestClinic {
+AutoCompile = TRUE;
+autoupdate = TRUE;
+comment = "\n\
+	Chest Clinic                                  Text Copyright 1998-2012 Norsys Software Corp.\n\n\
+	This Bayes net is also known as \"Asia\", and is an example which is popular \n\
+	for introducing Bayes nets.  It is from Lauritzen&Spiegelhalter88 (see below).\n\
+	It is for example purposes only, and should not be used for real decision making.\n\n\
+	It is a simplified version of a net that could be used to diagnose patients arriving\n\
+	at a clinic.  Each node in the net corresponds to some condition of the patient,\n\
+	for example, \"Visit to Asia\" indicates whether the patient recently visited Asia.\n\
+	To diagnose a patient, values are entered for nodes when they are known.  \n\
+	Netica then automatically re-calculates the probabilities for all the other nodes,\n\
+	based on the relationships between them.  The links between the nodes indicate how the\n\
+	relationships between the nodes are structured.\n\n\
+	The two top nodes are for predispositions which influence the likelihood of the diseases. \n\
+	Those diseases appear in the row below them.  At the bottom are symptoms of the diseases.\n\
+	To a large degree, the links of the network correspond to causation.  \n\
+	This is a common structure for diagnostic networks: predisposition nodes at the top, \n\
+	with links to nodes representing internal conditions and failure states, which in turn have\n\
+	links to nodes for observables.  Often there are many layers of nodes representing\n\
+	internal conditions, with links between them representing their complex inter-relationships.\n\n\
+	This net is from Lauritzen, Steffen L. and David J. Spiegelhalter (1988) \"Local \n\
+	computations with probabilities on graphical structures and their application to expert \n\
+	systems\" in Journal Royal Statistics Society B, 50(2), 157-194.\n\n\n\
+	TUTORIAL:            Basic Probabilistic Inference\n\
+	--------\n\n\
+	Keep in mind when doing tutorials that there is a great deal of assitance available\n\
+	from Netica's onscreen help, often about the exact networks of the tutorials.\n\
+	For this example, choose Help->Contents/Index, click on the Index tab, type in\n\
+	\"Chest Clinic\", and go to the example.\n\n\
+	All the information contained in a Bayes net can be observed by examining 3 things.\n\n\
+	First, there is the network structure, consisting of the nodes and their links,\n\
+	which you can see in the network diagram currently being displayed.\n\n\
+	Second, are the properties of each node, which you can see in their node dialog box,\n\
+	obtained by double-clicking on the node.\n\n\
+	Third, are the actual relationships between the nodes, which you can see by \n\
+	single-clicking on a node to select it, then choosing Table->View/Edit.  \n\
+	The relationship may be probabilistic or functional.  For example, click on \n\
+	\"Lung Cancer\", and then choose Table->View/Edit, to see its probabilistic relation \n\
+	with Smoking (the numbers are for example purposes only, and may not reflect reality).\n\
+	If you click on \"Tuberculosis or Cancer\", and choose Table->View/Edit, you can see\n\
+	its functional dependence on Tuberculosis and Lung Cancer.\n\n\
+	To compile the network for use, click on its window to make it the active window,\n\
+	and choose Network->Compile.  If that option is grayed-out, then it means that the\n\
+	net is already compiled (if there was some reason it couldn't compile, then the option\n\
+	would still be black and an error message would indicate the problem).  If the net is\n\
+	already compiled when you open it, that means that it was compiled when it was last\n\
+	saved to file.\n\n\
+	When compiled, the appropriate data structures for fast inference have been built \n\
+	internally.  The bars in each node have darkened, indicating that they and the \n\
+	numbers beside them are now valid data.  They indicate the probabilities of each \n\
+	state of the node.\n\n\
+	Suppose we want to \"diagnose\" a new patient.  When she first enters the clinic,\n\
+	without having any information about her, we believe she has lung cancer with a\n\
+	probability of 5.5%, as can be seen on the Lung Cancer node (the number may be higher\n\
+	than that for the general population, because something has led her to the chest clinic).\n\n\
+	If she has an abnormal x-ray, that information can be entered by clicking on the word\n\
+	\"abnormal\" of the \"XRay Result\" node (in a real-world Bayes net, you would probably\n\
+	be able to enter in exactly what way the x-ray was \"abnormal\").\n\n\
+	All the probability numbers and bars will change to take into account the finding.\n\
+	Now the probability that she has lung cancer has increased to 48.9%.\n\n\
+	If you further indicate that she has made a visit to asia recently, by clicking on\n\
+	\"visit\", the probability of lung cancer decreases to 37.1%, because the abnormal XRay is \n\
+	partially explained away by a greater chance of Tuberculosis (which she could \n\
+	catch in Asia).  Old fashioned medical expert systems had problems with this kind of \n\
+	reasoning, since each of the findings \"Abnormal XRay\" and \"Visit to Asia\" by themselves\n\
+	increase or leave the same the probability of lung cancer.\n\n\
+	You can try entering and changing some more findings.  To remove a finding, simply click\n\
+	on its name again.  If you want to remove all the findings (a new patient has just walked\n\
+	in), choose Network->Remove Findings (remember to click in the net window to make it\n\
+	the active window if you don't see the right menu).\n\n\n\n\
+	";
+whenchanged = 1729655235;
+
+visual V1 {
+	defdispform = BELIEFBARS;
+	nodelabeling = TITLE;
+	NodeMaxNumEntries = 50;
+	nodefont = font {shape= "Arial"; size= 14;};
+	linkfont = font {shape= "Arial"; size= 9;};
+	ShowLinkStrengths = 1;
+	windowposn = (0, 3, 843, 510);
+	CommentShowing = TRUE;
+	CommentWindowPosn = (0, 510, 845, 777);
+	resolution = 72;
+	drawingbounds = (1339, 730);
+	showpagebreaks = FALSE;
+	usegrid = TRUE;
+	gridspace = (6, 6);
+	NodeSet Node {BuiltIn = 1; Color = 0x00c0c0c0;};
+	NodeSet Nature {BuiltIn = 1; Color = 0x00f8eed2;};
+	NodeSet Deterministic {BuiltIn = 1; Color = 0x00d3caa6;};
+	NodeSet Finding {BuiltIn = 1; Color = 0x00c8c8c8;};
+	NodeSet Constant {BuiltIn = 1; Color = 0x00ffffff;};
+	NodeSet ConstantValue {BuiltIn = 1; Color = 0x00ffffb4;};
+	NodeSet Utility {BuiltIn = 1; Color = 0x00ffbdbd;};
+	NodeSet Decision {BuiltIn = 1; Color = 0x00dee8ff;};
+	NodeSet Documentation {BuiltIn = 1; Color = 0x00f0fafa;};
+	NodeSet ClearDocumentation {Color = 0x00ffffff;};
+	NodeSet Title {BuiltIn = 1; Color = 0x00ffffff;};
+	NodeSet Intermediate {Color = 0x00d7f4cc;};
+	NodeSet Predispositions {Color = 0x00fffed9;};
+	NodeSet Diseases {Color = 0x00ffe0c1;};
+	NodeSet Symptoms {Color = 0x00d5edf7;};
+	NodeSet target {Disabled = 1; Color = 0x00c8c8c8;};
+	PrinterSetting A {
+		margins = (1270, 1270, 1270, 1270);
+		magnify = 1;
+		};
+	};
+
+node Travel {
+	discrete = TRUE;
+	states = (visit, no_visit);
+	kind = NATURE;
+	chance = CHANCE;
+	parents = ();
+	probs = 
+		// visit        no visit     
+		  (0.01,        0.99);
+	title = "World Travel";
+	comment = "Patient has recently visited Asia";
+	whenchanged = 1354046558;
+	belief = (0.01, 0.99);
+	visual V1 {
+		center = (132, 54);
+		height = 1;
+		};
+	};
+
+node Tuberculosis {
+	discrete = TRUE;
+	states = (present, absent);
+	kind = NATURE;
+	chance = CHANCE;
+	parents = (Travel);
+	probs = 
+		// present      absent        // Travel   
+		  (0.05,        0.95,         // visit    
+		   0.01,        0.99);        // no visit ;
+	title = "Tuberculosis";
+	whenchanged = 1086993659;
+	belief = (0.0104, 0.9896);
+	visual V1 {
+		center = (132, 174);
+		height = 4;
+		};
+	};
+
+node Pain {
+	discrete = TRUE;
+	states = (none, weak, strong);
+	kind = NATURE;
+	chance = CHANCE;
+	parents = ();
+	probs = 
+		// none         weak         strong       
+		  (0.9847982,   0.01300156,  0.002200264);
+	whenchanged = 1729654639;
+	belief = (0.9847982, 0.01300156, 0.002200264);
+	visual V1 {
+		center = (138, 462);
+		height = 2;
+		};
+	};
+
+node Age {
+	discrete = TRUE;
+	states = (old, young, adult);
+	kind = NATURE;
+	chance = CHANCE;
+	parents = ();
+	probs = 
+		// old          young        adult        
+		  (0.16,        0.177,       0.663);
+	title = "Age";
+	whenchanged = 1729654801;
+	belief = (0.16, 0.177, 0.663);
+	visual V1 {
+		center = (678, 330);
+		height = 7;
+		};
+	};
+
+node History {
+	discrete = TRUE;
+	states = (bad, normal, good);
+	kind = NATURE;
+	chance = CHANCE;
+	parents = ();
+	probs = 
+		// bad          normal       good         
+		  (0.13,        0.57,        0.3);
+	title = "History";
+	whenchanged = 1729653920;
+	belief = (0.13, 0.57, 0.3);
+	visual V1 {
+		center = (936, 330);
+		height = 8;
+		};
+	};
+
+node Smoking {
+	discrete = TRUE;
+	states = (smoker, non_smoker);
+	kind = NATURE;
+	chance = CHANCE;
+	parents = ();
+	probs = 
+		// smoker       non smoker   
+		  (0.5,         0.5);
+	title = "Smoking";
+	whenchanged = 1729654797;
+	belief = (0.5, 0.5);
+	visual V1 {
+		center = (408, 132);
+		height = 6;
+		};
+	};
+
+node Cancer {
+	discrete = TRUE;
+	states = (present, absent);
+	kind = NATURE;
+	chance = CHANCE;
+	parents = (Pain, Age, History, Smoking);
+	probs = 
+		// present      absent        // Pain   Age   History Smoking    
+		  (0.203,       0.797,        // none   old   bad     smoker     
+		   0.103,       0.897,        // none   old   bad     non smoker 
+		   0.053,       0.947,        // none   old   normal  smoker     
+		   0.013,       0.987,        // none   old   normal  non smoker 
+		   0.053,       0.947,        // none   old   good    smoker     
+		   0.003,       0.997,        // none   old   good    non smoker 
+		   0.053,       0.947,        // none   young bad     smoker     
+		   0.013,       0.987,        // none   young bad     non smoker 
+		   0.003,       0.997,        // none   young normal  smoker     
+		   0.003,       0.997,        // none   young normal  non smoker 
+		   0.003,       0.997,        // none   young good    smoker     
+		   0.003,       0.997,        // none   young good    non smoker 
+		   0.203,       0.797,        // none   adult bad     smoker     
+		   0.103,       0.897,        // none   adult bad     non smoker 
+		   0.203,       0.797,        // none   adult normal  smoker     
+		   0.103,       0.897,        // none   adult normal  non smoker 
+		   0.053,       0.947,        // none   adult good    smoker     
+		   0.053,       0.947,        // none   adult good    non smoker 
+		   0.303,       0.697,        // weak   old   bad     smoker     
+		   0.303,       0.697,        // weak   old   bad     non smoker 
+		   0.203,       0.797,        // weak   old   normal  smoker     
+		   0.103,       0.897,        // weak   old   normal  non smoker 
+		   0.203,       0.797,        // weak   old   good    smoker     
+		   0.103,       0.897,        // weak   old   good    non smoker 
+		   0.303,       0.697,        // weak   young bad     smoker     
+		   0.303,       0.697,        // weak   young bad     non smoker 
+		   0.303,       0.697,        // weak   young normal  smoker     
+		   0.303,       0.697,        // weak   young normal  non smoker 
+		   0.303,       0.697,        // weak   young good    smoker     
+		   0.303,       0.697,        // weak   young good    non smoker 
+		   0.303,       0.697,        // weak   adult bad     smoker     
+		   0.303,       0.697,        // weak   adult bad     non smoker 
+		   0.303,       0.697,        // weak   adult normal  smoker     
+		   0.303,       0.697,        // weak   adult normal  non smoker 
+		   0.303,       0.697,        // weak   adult good    smoker     
+		   0.303,       0.697,        // weak   adult good    non smoker 
+		   0.443,       0.557,        // strong old   bad     smoker     
+		   0.303,       0.697,        // strong old   bad     non smoker 
+		   0.443,       0.557,        // strong old   normal  smoker     
+		   0.203,       0.797,        // strong old   normal  non smoker 
+		   0.053,       0.947,        // strong old   good    smoker     
+		   0.053,       0.947,        // strong old   good    non smoker 
+		   0.053,       0.947,        // strong young bad     smoker     
+		   0.013,       0.987,        // strong young bad     non smoker 
+		   0.053,       0.947,        // strong young normal  smoker     
+		   0.013,       0.987,        // strong young normal  non smoker 
+		   0.013,       0.987,        // strong young good    smoker     
+		   0.013,       0.987,        // strong young good    non smoker 
+		   0.203,       0.797,        // strong adult bad     smoker     
+		   0.103,       0.897,        // strong adult bad     non smoker 
+		   0.203,       0.797,        // strong adult normal  smoker     
+		   0.103,       0.897,        // strong adult normal  non smoker 
+		   0.103,       0.897,        // strong adult good    smoker     
+		   0.103,       0.897);       // strong adult good    non smoker ;
+	numcases = 
+		                 // Pain   Age   History Smoking    
+		  (1,            // none   old   bad     smoker     
+		   0,            // none   old   bad     non smoker 
+		   0,            // none   old   normal  smoker     
+		   0,            // none   old   normal  non smoker 
+		   0,            // none   old   good    smoker     
+		   0,            // none   old   good    non smoker 
+		   0,            // none   young bad     smoker     
+		   0,            // none   young bad     non smoker 
+		   0,            // none   young normal  smoker     
+		   0,            // none   young normal  non smoker 
+		   0,            // none   young good    smoker     
+		   0,            // none   young good    non smoker 
+		   0,            // none   adult bad     smoker     
+		   0,            // none   adult bad     non smoker 
+		   0,            // none   adult normal  smoker     
+		   0,            // none   adult normal  non smoker 
+		   0,            // none   adult good    smoker     
+		   0,            // none   adult good    non smoker 
+		   0,            // weak   old   bad     smoker     
+		   0,            // weak   old   bad     non smoker 
+		   0,            // weak   old   normal  smoker     
+		   0,            // weak   old   normal  non smoker 
+		   0,            // weak   old   good    smoker     
+		   0,            // weak   old   good    non smoker 
+		   0,            // weak   young bad     smoker     
+		   0,            // weak   young bad     non smoker 
+		   0,            // weak   young normal  smoker     
+		   0,            // weak   young normal  non smoker 
+		   0,            // weak   young good    smoker     
+		   0,            // weak   young good    non smoker 
+		   0,            // weak   adult bad     smoker     
+		   0,            // weak   adult bad     non smoker 
+		   0,            // weak   adult normal  smoker     
+		   0,            // weak   adult normal  non smoker 
+		   0,            // weak   adult good    smoker     
+		   0,            // weak   adult good    non smoker 
+		   0,            // strong old   bad     smoker     
+		   0,            // strong old   bad     non smoker 
+		   0,            // strong old   normal  smoker     
+		   0,            // strong old   normal  non smoker 
+		   0,            // strong old   good    smoker     
+		   0,            // strong old   good    non smoker 
+		   0,            // strong young bad     smoker     
+		   0,            // strong young bad     non smoker 
+		   0,            // strong young normal  smoker     
+		   0,            // strong young normal  non smoker 
+		   0,            // strong young good    smoker     
+		   0,            // strong young good    non smoker 
+		   0,            // strong adult bad     smoker     
+		   0,            // strong adult bad     non smoker 
+		   0,            // strong adult normal  smoker     
+		   0,            // strong adult normal  non smoker 
+		   0,            // strong adult good    smoker     
+		   0);           // strong adult good    non smoker ;
+	whenchanged = 1729655235;
+	belief = (0.0929008, 0.9070992);
+	visual V1 {
+		center = (624, 462);
+		height = 5;
+		link 2 {
+			path = ((640, 378), (624, 396), (624, 425));
+			};
+		link 3 {
+			path = ((896, 378), (822, 462), (743, 462));
+			};
+		link 4 {
+			path = ((420, 169), (492, 384), (562, 425));
+			};
+		};
+	};
+
+node Bronchitis {
+	discrete = TRUE;
+	states = (present, absent);
+	kind = NATURE;
+	chance = CHANCE;
+	parents = (Smoking);
+	probs = 
+		// present      absent        // Smoking    
+		  (0.6,         0.4,          // smoker     
+		   0.3,         0.7);         // non smoker ;
+	title = "Bronchitis";
+	whenchanged = 1086993675;
+	belief = (0.45, 0.55);
+	visual V1 {
+		center = (408, 258);
+		height = 3;
+		};
+	};
+NodeSet Predispositions {Nodes = (Travel, Smoking, Age, History);};
+NodeSet Diseases {Nodes = (Tuberculosis, Bronchitis);};
+NodeSet Symptoms {Nodes = (Pain, Pain);};
+NodeSet ClearDocumentation {Nodes = ();};
+NodeSet Intermediate {Nodes = ();};
+NodeSet target {Nodes = (Tuberculosis, Bronchitis, Age, History, Cancer);};
+ElimOrder = (Travel, Tuberculosis, Bronchitis, Pain, Age, History, Smoking, Cancer);
+};
