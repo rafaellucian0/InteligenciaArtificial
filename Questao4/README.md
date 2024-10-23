@@ -4,4 +4,4 @@
 
 dataset_casos - Dataset com dados a serem diagnosticados
 
-dataset_doencas - Dataset com dados já diagnosticados que servirá para a recuperação e análise de similaridade dos casos
+dataset_doencas - Dataset com dados já diagnosticados que servirá para a recuperação de casos e análise de suas similaridades
